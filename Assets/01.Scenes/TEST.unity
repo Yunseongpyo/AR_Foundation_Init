@@ -313,7 +313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db01b452c59b59841929b28e19752427, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placeObject: {fileID: 6714707624528216507, guid: 79d8a746c55c77140ba77f1ef9fa7d2b,
+  placeObject: {fileID: 3790404483457875874, guid: cd396e4cd5027ca4ca65b1caa1c5e51f,
     type: 3}
 --- !u!1 &760498047
 GameObject:
