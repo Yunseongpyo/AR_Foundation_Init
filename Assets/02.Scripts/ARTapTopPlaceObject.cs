@@ -30,6 +30,10 @@ public class ARTapTopPlaceObject : MonoBehaviour
     //ar카메라 부분
     public Camera arCamera;
     private CameraRay onoffCameraRay;
+
+
+    //임시 큐브맵
+    public GameObject cubemap;
     private void Start()
     {
         rayManager = FindObjectOfType<ARRaycastManager>();
@@ -85,6 +89,7 @@ public class ARTapTopPlaceObject : MonoBehaviour
                 // alive cube 비디오 켜기/끄기
                 else if (Physics.Raycast(ray, out hitobj, 100.0f, 1 << 11) && aliveCubeVideoOnoff == false)
                 {
+                    Instantiate(cubemap, hitobj.transform.position + new Vector3(0,-0.5f,-1.0f), hitobj.transform.rotation);
                     hitobj.transform.GetChild(0).gameObject.SetActive(true);
                     aliveCubeVideoOnoff = !aliveCubeVideoOnoff;
                 }

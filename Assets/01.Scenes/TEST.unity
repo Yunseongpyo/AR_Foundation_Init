@@ -739,6 +739,7 @@ MonoBehaviour:
     type: 3}
   ischeckClear: 0
   arCamera: {fileID: 760498048}
+  cubemap: {fileID: 6767199698906826485, guid: 00fae2c0f17bf094aaf8c5e8f9c3c841, type: 3}
 --- !u!1 &1101812097
 GameObject:
   m_ObjectHideFlags: 0
