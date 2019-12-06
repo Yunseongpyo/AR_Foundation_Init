@@ -11,43 +11,75 @@ public class ARTapTopPlaceObject : MonoBehaviour
 
     private ARRaycastManager rayManager;
     private GameObject visual;
-    private List<ARRaycastHit> hits = new List<ARRaycastHit>();
+    private List<ARRaycastHit> hits;
+    private GameObject instanceObj;
 
-    private ObjectsSpawner checkbool;
+
+    private Ray ray;
+    private RaycastHit hitobj;
+
+
+    public GameObject objectToSpwan;
+
+    public bool ischeckClear;
+
+
 
 
     public Camera arCamera;
-    private RaycastHit hitobj;
     private void Start()
     {
         rayManager = FindObjectOfType<ARRaycastManager>();
-        visual = transform.GetChild(0).gameObject;
 
+        visual = transform.GetChild(0).gameObject;
+        //Touch touch = Input.GetTouch(0);
         visual.SetActive(false);
     }
 
+
+   
     private void Update()
     {
-        //Touch touch = Input.GetTouch(0);
-        //Ray cameraHit = arCamera.ScreenPointToRay(touch.position);
-        rayManager.Raycast(new Vector2(Screen.width / 2, Screen.height / 2), hits, TrackableType.Planes);
-        if(hits.Count >0)
+        //if (Input.touchCount == 0) return;
+
+        List<ARRaycastHit> hits = new List<ARRaycastHit>();
+
+        if (rayManager.Raycast(new Vector2(Screen.width / 2, Screen.height / 2), hits, TrackableType.PlaneWithinPolygon))
         {
             transform.position = hits[0].pose.position;
             transform.rotation = hits[0].pose.rotation;
 
-            if (!visual.activeInHierarchy)
+            if (!visual.activeInHierarchy && ischeckClear == false)
             {
                 visual.SetActive(true);
             }
+            if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began && ischeckClear == false)
+            {
+                ray = arCamera.ScreenPointToRay(Input.GetTouch(0).position);
+                if(Physics.Raycast(ray, out hitobj, 100.0f, 1<<9))
+                {
+                    instanceObj = Instantiate(objectToSpwan, hits[0].pose.position, hits[0].pose.rotation);
+                    ischeckClear = !ischeckClear;
+                    visual.SetActive(false);
+                }
+
+            }
         }
-        //if (Physics.Raycast(cameraHit,out hitobj))
-        //{
-        //    if(hitobj.transform.CompareTag("CLEAR") && checkbool.ischeckClear == true)
-        //    {
-        //        visual.SetActive(true);
-        //        checkbool.ischeckClear = false;
-        //    }
-        //}
+        if(ischeckClear == true)
+        {
+            if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
+            {
+                ray = arCamera.ScreenPointToRay(Input.GetTouch(0).position);
+                if (Physics.Raycast(ray, out hitobj, 100.0f, 1 << 10))
+                {
+                    Destroy(instanceObj);
+                    ischeckClear = !ischeckClear;
+                    visual.SetActive(true);
+                }
+
+            }
+
+        }
+
     }
 }
