@@ -18,19 +18,22 @@ public class ARTapTopPlaceObject : MonoBehaviour
     private Ray ray;
     private RaycastHit hitobj;
 
-
+    //포트폴리오 오브젝트
     public GameObject objectToSpwan;
 
+    //클리어 체크 
     public bool ischeckClear;
 
+    //aliveCube On/Off체크
+    private bool aliveCubeVideoOnoff;
 
-
-
+    //ar카메라 부분
     public Camera arCamera;
+    private CameraRay onoffCameraRay;
     private void Start()
     {
         rayManager = FindObjectOfType<ARRaycastManager>();
-
+        onoffCameraRay = arCamera.GetComponent<CameraRay>();
         visual = transform.GetChild(0).gameObject;
         //Touch touch = Input.GetTouch(0);
         visual.SetActive(false);
@@ -40,8 +43,6 @@ public class ARTapTopPlaceObject : MonoBehaviour
    
     private void Update()
     {
-        //if (Input.touchCount == 0) return;
-
         List<ARRaycastHit> hits = new List<ARRaycastHit>();
 
         if (rayManager.Raycast(new Vector2(Screen.width / 2, Screen.height / 2), hits, TrackableType.PlaneWithinPolygon))
@@ -58,7 +59,9 @@ public class ARTapTopPlaceObject : MonoBehaviour
                 ray = arCamera.ScreenPointToRay(Input.GetTouch(0).position);
                 if(Physics.Raycast(ray, out hitobj, 100.0f, 1<<9))
                 {
+                    onoffCameraRay.enabled = true;
                     instanceObj = Instantiate(objectToSpwan, hits[0].pose.position, hits[0].pose.rotation);
+
                     ischeckClear = !ischeckClear;
                     visual.SetActive(false);
                 }
@@ -72,9 +75,23 @@ public class ARTapTopPlaceObject : MonoBehaviour
                 ray = arCamera.ScreenPointToRay(Input.GetTouch(0).position);
                 if (Physics.Raycast(ray, out hitobj, 100.0f, 1 << 10))
                 {
+                    onoffCameraRay.enabled = false;
                     Destroy(instanceObj);
+
                     ischeckClear = !ischeckClear;
                     visual.SetActive(true);
+                }
+
+                // alive cube 비디오 켜기/끄기
+                else if (Physics.Raycast(ray, out hitobj, 100.0f, 1 << 11) && aliveCubeVideoOnoff == false)
+                {
+                    hitobj.transform.GetChild(0).gameObject.SetActive(true);
+                    aliveCubeVideoOnoff = !aliveCubeVideoOnoff;
+                }
+                else if (Physics.Raycast(ray, out hitobj, 100.0f, 1 << 11) && aliveCubeVideoOnoff == true)
+                {
+                    hitobj.transform.GetChild(0).gameObject.SetActive(false);
+                    aliveCubeVideoOnoff = !aliveCubeVideoOnoff;
                 }
 
             }
