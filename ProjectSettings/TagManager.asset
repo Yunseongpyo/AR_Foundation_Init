@@ -8,6 +8,8 @@ TagManager:
   - ALIVECUBE
   - PENGUIN
   - CUBEWALL
+  - WORD
+  - HANGLE
   layers:
   - Default
   - TransparentFX
@@ -22,7 +24,7 @@ TagManager:
   - CLEAR
   - ALIVECUBE
   - PENGUIN
-  - 
+  - WORD
   - 
   - 
   - 

@@ -13,9 +13,14 @@ public class CameraRay : MonoBehaviour
     //hit objects
     private GameObject hitAlive;
     private GameObject hitPenguin;
+    private GameObject hitWord;
     private Transform penguinTr;
 
     private Camera arCamera;
+
+    //WordWorld
+    private WordAni aniCheck;
+
 
     //AliveCube material
     private Material alivecubeMat;
@@ -33,22 +38,40 @@ public class CameraRay : MonoBehaviour
     {
         hitAlive = GameObject.FindWithTag("ALIVECUBE");
         hitPenguin = GameObject.FindWithTag("PENGUIN");
-   
+        hitWord = GameObject.FindWithTag("WORD");
 
 
         cameraRay = new Ray(tr.position, tr.forward);
-        Debug.DrawRay(cameraRay.origin, cameraRay.direction*10.0f, Color.red);
- 
-            AliveCubeAni();
-            PenguinAni();
+        Debug.DrawRay(cameraRay.origin, cameraRay.direction * 10.0f, Color.red);
 
+        AliveCubeAni();
+        PenguinAni();
+        WordAni();
 
     }
+
+    void WordAni()
+    {
+        
+        if (Physics.Raycast(cameraRay, out hit, 100.0f, 1 << 13))
+        {
+            hitWord.gameObject.GetComponent<WordAni>().repaetCheck = true;
+            hitWord.transform.LookAt(tr);
+            hitWord.transform.GetChild(1).gameObject.SetActive(true);
+
+
+            //hitWord.gameObject.GetComponent<BoxCollider>().enabled = false;
+            StartCoroutine(hitWord.gameObject.GetComponent<WordAni>().AnimationWord());
+            
+        }
+        //벗어날 경우는 우선 임시적으로 큐브를 봤을 경우도 대체
+       
+    }
+
     void PenguinAni()
     {
         if (Physics.Raycast(cameraRay, out hit, 100.0f, 1 << 12))
         {
-            //애니메이션(무한회전)
             hitPenguin.gameObject.GetComponent<Animator>().SetBool("JUMP", true);
             hitPenguin.transform.LookAt(tr);
         }
@@ -66,6 +89,16 @@ public class CameraRay : MonoBehaviour
 
         if (Physics.Raycast(cameraRay, out hit, 100.0f, 1 << 11))
         {
+            //wordani 비활성화
+            hitWord.gameObject.GetComponent<WordAni>().repaetCheck = false;
+            hitWord.transform.GetChild(1).gameObject.SetActive(false);
+
+
+            hitWord.transform.rotation = Quaternion.Euler(0, 0, 0);
+
+            hitWord.gameObject.GetComponent<WordAni>().AniInit();
+
+
             //애니메이션(무한회전)
             hitAlive.gameObject.GetComponent<Animator>().SetBool("ISLOOK", true);
 
@@ -87,6 +120,8 @@ public class CameraRay : MonoBehaviour
             alivecubeMat.SetVector("_GLOWCOLOR", new Color(0f, 105f, 190f, 0f) * 0.01f);
 
         }
+
+
     }
 
 }
