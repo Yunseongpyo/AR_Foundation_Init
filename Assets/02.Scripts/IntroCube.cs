@@ -34,13 +34,13 @@ public class IntroCube : MonoBehaviour
     private int cubeTouch;
 
 
-
+    public float cubesize;
 
     void Start()
     {
         preTr_right = tr;
         preTr_left = tr;
-
+        this.gameObject.transform.localScale = this.gameObject.transform.localScale * cubesize;
         //preTr_left.rotation = Quaternion.Euler(left_Rot);
         //preTr_left.position = preTr_left.position + Vector3.left;
 
@@ -71,17 +71,18 @@ public class IntroCube : MonoBehaviour
         for (int i = 0; i < 12; i++)
         {
             GameObject nowObj = Instantiate(nextObj);
+            nowObj.transform.localScale = nowObj.transform.localScale * cubesize;
             nowObj.transform.parent = emptyGameObject.transform;
             //nowObjs.Add(nowObj);
             if (i % 2 == 0)
             {
 
-                nowObj.transform.position = preTr_right.position + right_dir + temp_dir*0.1f;
+                nowObj.transform.position = preTr_right.position + right_dir + temp_dir* cubesize;
 
                 //nowObj.transform.Rotate(Vector3.forward * -90.0f);
                 nowObj.transform.DORotate(Vector3.forward * -90.0f, 0.5f);
 
-                right_dir = right_dir + Vector3.right* 0.1f;
+                right_dir = right_dir + Vector3.right* cubesize;
                 StartCoroutine(MakeMapForwardBack(nowObj.transform));
 
 
@@ -89,13 +90,13 @@ public class IntroCube : MonoBehaviour
             }
             else if (i % 2 == 1)
             {
-                nowObj.transform.position = tr.position + temp_dir*0.1f;
+                nowObj.transform.position = tr.position + temp_dir* cubesize;
                 nowObj.transform.rotation = Quaternion.Euler(left_Rot);
-                nowObj.transform.position = nowObj.transform.position + Vector3.left*0.1f + left_dir;
+                nowObj.transform.position = nowObj.transform.position + Vector3.left* cubesize + left_dir;
 
                 nowObj.transform.DORotate(left_Rot_Var, 0.5f);
                 //nowObj.transform.DORotate(Vector3.forward * 90.0f, 0.5f);
-                left_dir = left_dir + Vector3.left* 0.1f;
+                left_dir = left_dir + Vector3.left* cubesize;
                 StartCoroutine(MakeMapForwardBack(nowObj.transform));
 
             }
@@ -118,6 +119,8 @@ public class IntroCube : MonoBehaviour
         for (int i = 0; i < 12; i++)
         {
             GameObject nowObj = Instantiate(nextObj);
+            nowObj.transform.localScale = nowObj.transform.localScale * cubesize;
+
             nowObj.transform.parent = emptyGameObject.transform;
 
             if (i % 2 == 0)
@@ -128,10 +131,10 @@ public class IntroCube : MonoBehaviour
                 //nowObj.transform.Rotate(Vector3.forward * -90.0f);
                 nowObj.transform.DORotate(Vector3.forward * -90.0f, 0.5f);
 
-                right_dir = right_dir + Vector3.right*0.1f;
+                right_dir = right_dir + Vector3.right* cubesize;
                 StartCoroutine(MakeMapForwardBack(nowObj.transform));
 
-                StartCoroutine(MakeMapUp(nowObj.transform, 1.1f));
+                StartCoroutine(MakeMapUp(nowObj.transform, cubesize * 11f));
                 StartCoroutine(MakeMapUp(nowObj.transform, 0));
 
             }
@@ -139,13 +142,13 @@ public class IntroCube : MonoBehaviour
             {
                 nowObj.transform.position = tr.position;
                 nowObj.transform.rotation = Quaternion.Euler(left_Rot);
-                nowObj.transform.position = nowObj.transform.position + Vector3.left*0.1f + left_dir;
+                nowObj.transform.position = nowObj.transform.position + Vector3.left* cubesize + left_dir;
 
                 nowObj.transform.DORotate(left_Rot_Var, 0.5f);
                 //nowObj.transform.DORotate(Vector3.forward * 90.0f, 0.5f);
-                left_dir = left_dir + Vector3.left * 0.1f;
+                left_dir = left_dir + Vector3.left * cubesize;
                 StartCoroutine(MakeMapForwardBack(nowObj.transform));
-                StartCoroutine(MakeMapUp(nowObj.transform, 1.1f));
+                StartCoroutine(MakeMapUp(nowObj.transform, cubesize*11f));
                 StartCoroutine(MakeMapUp(nowObj.transform, 0));
             }
             yield return new WaitForSeconds(0.1f);
@@ -165,14 +168,16 @@ public class IntroCube : MonoBehaviour
         for (int i = 0; i < 12; i++)
         {
             GameObject nowObj = Instantiate(nextObj);
+            nowObj.transform.localScale = nowObj.transform.localScale * cubesize;
+
             nowObj.transform.parent = emptyGameObject.transform;
 
             nowObj.transform.position = _tr.position;
             nowObj.transform.rotation = Quaternion.Euler(forward_Rot);
-            nowObj.transform.position = nowObj.transform.position + forward_dir_Var*0.1f + forward_dir;
+            nowObj.transform.position = nowObj.transform.position + forward_dir_Var* cubesize + forward_dir;
             nowObj.transform.DORotate(forward_Rot_Var, 0.5f);
             //nowObj.transform.DOPunchPosition(Vector3.up, 0.5f,3);
-            forward_dir = forward_dir + Vector3.forward * 0.1f;
+            forward_dir = forward_dir + Vector3.forward * cubesize;
 
 
             yield return new WaitForSeconds(0.1f);
@@ -194,14 +199,16 @@ public class IntroCube : MonoBehaviour
         for (int i = 0; i < 11; i++)
         {
             GameObject nowObj = Instantiate(nextObj);
+            nowObj.transform.localScale = nowObj.transform.localScale * cubesize;
+
             nowObj.transform.parent = emptyGameObject.transform;
 
-            nowObj.transform.position = _tr.position + Vector3.forward * _dirnum + Vector3.left * 0.2f;
+            nowObj.transform.position = _tr.position + Vector3.forward * _dirnum + Vector3.left * cubesize *2;
             nowObj.transform.rotation = Quaternion.Euler(up_Rot);
-            nowObj.transform.position = nowObj.transform.position + up_dir_Var*0.1f + up_dir;
+            nowObj.transform.position = nowObj.transform.position + up_dir_Var* cubesize + up_dir;
             nowObj.transform.DORotate(up_Rot_Var, 0.5f);
 
-            up_dir = up_dir + Vector3.up * 0.1f;
+            up_dir = up_dir + Vector3.up * cubesize;
 
             yield return new WaitForSeconds(0.1f);
         }
@@ -220,12 +227,14 @@ public class IntroCube : MonoBehaviour
         for (int i = 0; i < 12; i++)
         {
             GameObject nowObj = Instantiate(nextObj);
+            nowObj.transform.localScale = nowObj.transform.localScale * cubesize;
+
             nowObj.transform.parent = emptyGameObject.transform;
 
             //tempObj.transform.position = nowObj.transform.position;
-            nowObj.transform.position = _tr.position + Vector3.right * 0.5f;
+            nowObj.transform.position = _tr.position + Vector3.right * cubesize* 5;
             nowObj.transform.rotation = Quaternion.Euler(LeftWall_Rot);
-            nowObj.transform.position = nowObj.transform.position + LeftWall_dir_Var*0.1f + LeftWall_dir;
+            nowObj.transform.position = nowObj.transform.position + LeftWall_dir_Var* cubesize + LeftWall_dir;
             nowObj.transform.DORotate(LeftWall_Rot_Var, 0.5f);
             //tempObj.transform.position = nowObj.transform.position + Vector3.left * 10;
 
@@ -234,7 +243,7 @@ public class IntroCube : MonoBehaviour
 
             //StartCoroutine(MakeMapForwardBack(tempObj.transform));
 
-            LeftWall_dir = LeftWall_dir + Vector3.up * 0.1f;
+            LeftWall_dir = LeftWall_dir + Vector3.up * cubesize;
 
             yield return new WaitForSeconds(0.1f);
         }
@@ -255,19 +264,21 @@ public class IntroCube : MonoBehaviour
         for (int i = 0; i < 12; i++)
         {
             GameObject nowObj = Instantiate(nextObj);
+            nowObj.transform.localScale = nowObj.transform.localScale * cubesize;
+
             nowObj.transform.parent = emptyGameObject.transform;
 
             //tempObj.transform.position = nowObj.transform.position;
-            nowObj.transform.position = _tr.position + Vector3.left * 0.5f;
+            nowObj.transform.position = _tr.position + Vector3.left * cubesize* 5;
             nowObj.transform.rotation = Quaternion.Euler(RightWall_Rot);
-            nowObj.transform.position = nowObj.transform.position + RightWall_dir_Var*0.1f + RightWall_dir;
+            nowObj.transform.position = nowObj.transform.position + RightWall_dir_Var* cubesize + RightWall_dir;
             nowObj.transform.DORotate(RightWall_Rot_Var, 0.5f);
             //tempObj.transform.position = nowObj.transform.position + Vector3.left * 10;
 
             StartCoroutine(MakeMapForwardBack(nowObj.transform));
 
 
-            RightWall_dir = RightWall_dir + Vector3.up * 0.1f;
+            RightWall_dir = RightWall_dir + Vector3.up * cubesize;
 
             yield return new WaitForSeconds(0.1f);
         }

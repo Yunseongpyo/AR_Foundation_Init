@@ -4,7 +4,7 @@
             "typeInfo": {
                 "fullName": "UnityEditor.ShaderGraph.ColorShaderProperty"
             },
-            "JSONnodeData": "{\n    \"m_Name\": \"Color\",\n    \"m_GeneratePropertyBlock\": true,\n    \"m_Guid\": {\n        \"m_GuidSerialized\": \"f011f508-1c94-4902-85ad-f83967ada1ce\"\n    },\n    \"m_DefaultReferenceName\": \"Color_DA183E10\",\n    \"m_OverrideReferenceName\": \"\",\n    \"m_Precision\": 0,\n    \"m_Value\": {\n        \"r\": 3.3254902362823488,\n        \"g\": 2.760784387588501,\n        \"b\": 0.0,\n        \"a\": 0.0\n    },\n    \"m_ColorMode\": 1,\n    \"m_Hidden\": false\n}"
+            "JSONnodeData": "{\n    \"m_Name\": \"Color\",\n    \"m_GeneratePropertyBlock\": true,\n    \"m_Guid\": {\n        \"m_GuidSerialized\": \"f011f508-1c94-4902-85ad-f83967ada1ce\"\n    },\n    \"m_DefaultReferenceName\": \"Color_DA183E10\",\n    \"m_OverrideReferenceName\": \"_GLOWCOLOR\",\n    \"m_Precision\": 0,\n    \"m_Value\": {\n        \"r\": 3.3254902362823488,\n        \"g\": 2.760784387588501,\n        \"b\": 0.0,\n        \"a\": 0.0\n    },\n    \"m_ColorMode\": 1,\n    \"m_Hidden\": false\n}"
         },
         {
             "typeInfo": {

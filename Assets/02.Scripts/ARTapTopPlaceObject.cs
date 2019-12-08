@@ -34,21 +34,28 @@ public class ARTapTopPlaceObject : MonoBehaviour
 
     //임시 큐브맵
     public GameObject cubemap;
+
+    private void Awake()
+    {
+        onoffCameraRay = arCamera.GetComponent<CameraRay>();
+
+    }
     private void Start()
     {
         rayManager = FindObjectOfType<ARRaycastManager>();
-        onoffCameraRay = arCamera.GetComponent<CameraRay>();
         visual = transform.GetChild(0).gameObject;
         //Touch touch = Input.GetTouch(0);
         visual.SetActive(false);
     }
 
+  
 
-   
+
     private void Update()
     {
         List<ARRaycastHit> hits = new List<ARRaycastHit>();
 
+        //포티폴리오 생성
         if (rayManager.Raycast(new Vector2(Screen.width / 2, Screen.height / 2), hits, TrackableType.PlaneWithinPolygon))
         {
             transform.position = hits[0].pose.position;
@@ -72,31 +79,68 @@ public class ARTapTopPlaceObject : MonoBehaviour
 
             }
         }
+
+        //포트폴리오 생성중
         if(ischeckClear == true)
         {
             if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
             {
                 ray = arCamera.ScreenPointToRay(Input.GetTouch(0).position);
-                if (Physics.Raycast(ray, out hitobj, 100.0f, 1 << 10))
-                {
-                    onoffCameraRay.enabled = false;
-                    Destroy(instanceObj);
+                ////클리어버튼 누를 경우 맵 붕괴
+                //if (Physics.Raycast(ray, out hitobj, 100.0f, 1 << 10))
+                //{
+                //    GameObject temp = GameObject.Find("TEMP");
+                //    GameObject [] cubewall = GameObject.FindGameObjectsWithTag("CUBEWALL");
+                //    for (int i=0; i<cubewall.Length; i++)
+                //    {
+                //        cubewall[i].GetComponent<Rigidbody>().useGravity = true;
+                //        cubewall[i].GetComponent<Rigidbody>().isKinematic = false;
+                //    }
+                    
+                //    Destroy(temp,5.0f);
 
-                    ischeckClear = !ischeckClear;
-                    visual.SetActive(true);
-                }
+                //}
+
+                //클리어버튼 누를 경우 모두 초기화
+                //if (Physics.Raycast(ray, out hitobj, 100.0f, 1 << 10))
+                //{
+
+                //    onoffCameraRay.enabled = false;
+                //    Destroy(instanceObj);
+
+                //    ischeckClear = !ischeckClear;
+                //    visual.SetActive(true);
+                //}
 
                 // alive cube 비디오 켜기/끄기
-                else if (Physics.Raycast(ray, out hitobj, 100.0f, 1 << 11) && aliveCubeVideoOnoff == false)
+                if (Physics.Raycast(ray, out hitobj, 100.0f, 1 << 11) && aliveCubeVideoOnoff == false)
                 {
+                    //설명UI끄기
+                    hitobj.transform.GetChild(1).gameObject.SetActive(false);
+
                     Instantiate(cubemap, hitobj.transform.position + new Vector3(0,-0.5f,-1.0f), hitobj.transform.rotation);
-                    hitobj.transform.GetChild(0).gameObject.SetActive(true);
+                    //카메라 레이 끄기
+                    onoffCameraRay.enabled = false;
+                    StartCoroutine(DelayVideoPlayer(hitobj));
+                    
                     aliveCubeVideoOnoff = !aliveCubeVideoOnoff;
                 }
                 else if (Physics.Raycast(ray, out hitobj, 100.0f, 1 << 11) && aliveCubeVideoOnoff == true)
                 {
                     hitobj.transform.GetChild(0).gameObject.SetActive(false);
+
+                    GameObject temp = GameObject.Find("TEMP");
+                    GameObject[] cubewall = GameObject.FindGameObjectsWithTag("CUBEWALL");
+                    for (int i = 0; i < cubewall.Length; i++)
+                    {
+                        cubewall[i].GetComponent<Rigidbody>().useGravity = true;
+                        cubewall[i].GetComponent<Rigidbody>().isKinematic = false;
+                    }
+
+                    Destroy(temp, 5.0f);
+
                     aliveCubeVideoOnoff = !aliveCubeVideoOnoff;
+                    onoffCameraRay.enabled = true;
                 }
 
             }
@@ -104,4 +148,12 @@ public class ARTapTopPlaceObject : MonoBehaviour
         }
 
     }
+    
+    IEnumerator DelayVideoPlayer(RaycastHit _hitobj)
+    {
+        yield return new WaitForSeconds(4.0f);
+        _hitobj.transform.GetChild(0).gameObject.SetActive(true);
+
+    }
+
 }
