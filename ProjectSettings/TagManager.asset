@@ -10,6 +10,7 @@ TagManager:
   - CUBEWALL
   - WORD
   - HANGLE
+  - TEXT
   layers:
   - Default
   - TransparentFX
@@ -25,8 +26,8 @@ TagManager:
   - ALIVECUBE
   - PENGUIN
   - WORD
-  - 
-  - 
+  - BREAKWORD
+  - CLICKWORD
   - 
   - 
   - 

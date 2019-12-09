@@ -35,6 +35,7 @@ public class ARTapTopPlaceObject : MonoBehaviour
     //임시 큐브맵
     public GameObject cubemap;
 
+    private GameObject wordExplode;
     private void Awake()
     {
         onoffCameraRay = arCamera.GetComponent<CameraRay>();
@@ -42,6 +43,8 @@ public class ARTapTopPlaceObject : MonoBehaviour
     }
     private void Start()
     {
+        wordExplode = Resources.Load("WordExplode") as GameObject;
+
         rayManager = FindObjectOfType<ARRaycastManager>();
         visual = transform.GetChild(0).gameObject;
         //Touch touch = Input.GetTouch(0);
@@ -54,7 +57,7 @@ public class ARTapTopPlaceObject : MonoBehaviour
     private void Update()
     {
         List<ARRaycastHit> hits = new List<ARRaycastHit>();
-
+        
         //포티폴리오 생성
         if (rayManager.Raycast(new Vector2(Screen.width / 2, Screen.height / 2), hits, TrackableType.PlaneWithinPolygon))
         {
@@ -88,18 +91,6 @@ public class ARTapTopPlaceObject : MonoBehaviour
                 ray = arCamera.ScreenPointToRay(Input.GetTouch(0).position);
                 
 
-                //클리어버튼 누를 경우 모두 초기화
-                //if (Physics.Raycast(ray, out hitobj, 100.0f, 1 << 10))
-                //{
-
-                //    onoffCameraRay.enabled = false;
-                //    Destroy(instanceObj);
-
-                //    ischeckClear = !ischeckClear;
-                //    visual.SetActive(true);
-                //}
-
-                // alive cube 비디오 켜기/끄기
                 if (Physics.Raycast(ray, out hitobj, 100.0f, 1 << 11) && aliveCubeVideoOnoff == false)
                 {
                     //설명UI끄기
@@ -124,11 +115,23 @@ public class ARTapTopPlaceObject : MonoBehaviour
                         cubewall[i].GetComponent<Rigidbody>().isKinematic = false;
                     }
 
-                    Destroy(temp, 5.0f);
+                    Destroy(temp, 7.0f);
 
                     aliveCubeVideoOnoff = !aliveCubeVideoOnoff;
                     onoffCameraRay.enabled = true;
                 }
+
+                else if (Physics.Raycast(ray, out hitobj, 100.0f, 1 << 15))
+                {
+                    Debug.Log("워드월드");
+                    hitobj.transform.parent.gameObject.transform.parent.gameObject.SetActive(false);
+                    Instantiate(wordExplode, hitobj.transform.position + new Vector3(0, +0.5f, 0), hitobj.transform.rotation);
+
+                    onoffCameraRay.enabled = false;
+                    //aliveCubeVideoOnoff = !aliveCubeVideoOnoff;
+
+                }
+
 
             }
 

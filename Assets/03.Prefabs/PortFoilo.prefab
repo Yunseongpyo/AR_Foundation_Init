@@ -795,7 +795,8 @@ GameObject:
   - component: {fileID: 1320917910}
   - component: {fileID: 1320917912}
   - component: {fileID: 1320917911}
-  m_Layer: 0
+  - component: {fileID: 1506255549}
+  m_Layer: 15
   m_Name: Click_text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -861,6 +862,19 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: OPEN!
+--- !u!65 &1506255549
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1320917909}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.4276152, y: 0.23311247, z: 0.08649187}
+  m_Center: {x: 0.017039424, y: -0.0017630557, z: -0.012301764}
 --- !u!1 &1371217329
 GameObject:
   m_ObjectHideFlags: 0
@@ -1630,8 +1644,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 2.0934224, z: 1.8889246}
-  m_Center: {x: 0, y: -0.081834346, z: -0.68786037}
+  m_Size: {x: 2.040835, y: 2.0934224, z: 1.9763567}
+  m_Center: {x: -0.15607513, y: -0.081834346, z: -0.6441443}
 --- !u!114 &7718974073708249400
 MonoBehaviour:
   m_ObjectHideFlags: 0

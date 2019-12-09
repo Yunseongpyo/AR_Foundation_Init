@@ -21,9 +21,9 @@ public class SpeechToTextController : MonoBehaviour
         voiceText.text = voice._text;
         if (!onOffRecording)
         {
-            voice.Active = false; 
+            voice.Active = false;
         }
-        else if(onOffRecording)
+        else if (onOffRecording)
         {
             voice.Active = true;
         }
