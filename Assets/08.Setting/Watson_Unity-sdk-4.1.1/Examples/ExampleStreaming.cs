@@ -27,6 +27,8 @@ using IBM.Cloud.SDK.Authentication.Iam;
 using IBM.Cloud.SDK.Utilities;
 using IBM.Cloud.SDK.DataTypes;
 
+
+
 namespace IBM.Watsson.Examples
 {
     public class ExampleStreaming : MonoBehaviour
@@ -56,6 +58,9 @@ namespace IBM.Watsson.Examples
         private AudioClip _recording = null;
         private int _recordingBufferSize = 1;
         private int _recordingHZ = 22050;
+
+        //외부에서 받은 스트링
+        public string _text;
 
         private SpeechToTextService _service;
 
@@ -100,9 +105,14 @@ namespace IBM.Watsson.Examples
                     _service.RecognizeModel = (string.IsNullOrEmpty(_recognizeModel) ? "ko-KR_BroadbandModel" : _recognizeModel);
 
                     _service.DetectSilence = true;
-                    _service.EnableWordConfidence = true;
-                    _service.EnableTimestamps = true;
-                    _service.SilenceThreshold = 0.01f;
+
+                    _service.EnableWordConfidence = false;
+                    _service.EnableTimestamps = false;
+                    _service.SilenceThreshold = 0.03f;
+
+                    //_service.EnableWordConfidence = true;
+                    //_service.EnableTimestamps = true;
+                    //_service.SilenceThreshold = 0.01f;
                     _service.MaxAlternatives = 1;
                     _service.EnableInterimResults = true;
                     _service.OnError = OnError;
@@ -214,6 +224,8 @@ namespace IBM.Watsson.Examples
                         string text = string.Format("{0}", alt.transcript, res.final ? "Final" : "Interim", alt.confidence);
 
                         Log.Debug("ExampleStreaming.OnRecognize()", text);
+
+                        _text = text;
                         ResultsField.text = text;
                     }
 

@@ -74,11 +74,18 @@ public class CameraRay : MonoBehaviour
         {
             hitPenguin.gameObject.GetComponent<Animator>().SetBool("JUMP", true);
             hitPenguin.transform.LookAt(tr);
+
+            //Penguin설명 UI 활성화
+            hitPenguin.transform.GetChild(1).gameObject.SetActive(true);
         }
         else
         {
             hitPenguin.gameObject.GetComponent<Animator>().SetBool("JUMP", false);
             hitPenguin.transform.rotation = Quaternion.Euler(0,180,0);
+            
+            //Penguin설명 UI 활성화
+            hitPenguin.transform.GetChild(1).gameObject.SetActive(false);
+
         }
     }
 

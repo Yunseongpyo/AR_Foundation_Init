@@ -86,20 +86,7 @@ public class ARTapTopPlaceObject : MonoBehaviour
             if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
             {
                 ray = arCamera.ScreenPointToRay(Input.GetTouch(0).position);
-                ////클리어버튼 누를 경우 맵 붕괴
-                //if (Physics.Raycast(ray, out hitobj, 100.0f, 1 << 10))
-                //{
-                //    GameObject temp = GameObject.Find("TEMP");
-                //    GameObject [] cubewall = GameObject.FindGameObjectsWithTag("CUBEWALL");
-                //    for (int i=0; i<cubewall.Length; i++)
-                //    {
-                //        cubewall[i].GetComponent<Rigidbody>().useGravity = true;
-                //        cubewall[i].GetComponent<Rigidbody>().isKinematic = false;
-                //    }
-                    
-                //    Destroy(temp,5.0f);
-
-                //}
+                
 
                 //클리어버튼 누를 경우 모두 초기화
                 //if (Physics.Raycast(ray, out hitobj, 100.0f, 1 << 10))

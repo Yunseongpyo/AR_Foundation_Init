@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class SpeechToTextController : MonoBehaviour
 {
     public IBM.Watsson.Examples.ExampleStreaming voice;
     public bool onOffRecording;
+    public TextMeshProUGUI voiceText;
+
     void Start()
     {
 
@@ -14,7 +18,8 @@ public class SpeechToTextController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!onOffRecording)
+        voiceText.text = voice._text;
+        if (!onOffRecording)
         {
             voice.Active = false; 
         }

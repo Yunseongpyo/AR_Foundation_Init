@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class WordAni : MonoBehaviour
 {
     private List<GameObject> wordList = new List<GameObject>();
